@@ -161,17 +161,28 @@ $devices | ConvertTo-Json
         # Check if user selected physical scanning
         is_hw = "hw-" in scanner_id or "twain-wia-bridge" in scanner_id
 
-        # Use our pre-generated 20-page QR sample stack
+        # Ensure directory exists
         sample_path = settings.SAMPLES_PATH / "ADF_Bulk_Scan_QR_HallTickets.pdf"
         if not sample_path.exists():
-            from ..generate_sample_adf import generate_sample_qr_adf_pdf
-            generate_sample_qr_adf_pdf(str(sample_path), count=20)
+            sample_path.parent.mkdir(parents=True, exist_ok=True)
+            try:
+                from .generate_sample_adf import generate_sample_qr_adf_pdf
+                generate_sample_qr_adf_pdf(str(sample_path), count=20)
+            except Exception as e:
+                # Fallback to backend root import
+                import sys
+                backend_dir = Path(__file__).resolve().parent.parent
+                if str(backend_dir) not in sys.path:
+                    sys.path.insert(0, str(backend_dir))
+                from generate_sample_adf import generate_sample_qr_adf_pdf
+                generate_sample_qr_adf_pdf(str(sample_path), count=20)
 
         import fitz
         doc = fitz.open(str(sample_path))
         page_count = len(doc)
         doc.close()
 
+        output_dir.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(str(sample_path), str(scanned_dest))
 
         return {

@@ -21,14 +21,18 @@ def trigger_scan(
     db: Session = Depends(get_db)
 ):
     # Perform scan acquisition via bridge
-    scan_result = scanner_bridge.perform_scan(
-        scanner_id=config.scanner_name,
-        config=config.model_dump(),
-        output_dir=settings.UPLOAD_PATH
-    )
+    try:
+        scan_result = scanner_bridge.perform_scan(
+            scanner_id=config.scanner_name,
+            config=config.model_dump(),
+            output_dir=settings.UPLOAD_PATH
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Scanner acquisition failed: {str(exc)}")
 
     if scan_result.get("status") != "success":
-        raise HTTPException(status_code=500, detail="Scanner acquisition failed")
+        err_detail = scan_result.get("error", "Scanner acquisition failed")
+        raise HTTPException(status_code=500, detail=err_detail)
 
     # Read page count
     file_path = scan_result["file_path"]
