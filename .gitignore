@@ -37,7 +37,9 @@ yarn-error.log*
 *.sqlite
 *.sqlite3
 
-# Storage (keep folder structure, ignore scanned batch artifacts)
+# Storage (keep folder structure, ignore all demo & scanned batch artifacts)
+storage/samples/*
+!storage/samples/.gitkeep
 storage/uploads/*
 !storage/uploads/.gitkeep
 storage/pages/*
