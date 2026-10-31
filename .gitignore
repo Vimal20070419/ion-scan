@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Storage (keep folder structure, ignore scanned batch artifacts)
+storage/uploads/*
+!storage/uploads/.gitkeep
+storage/pages/*
+!storage/pages/.gitkeep
+storage/output/*
+!storage/output/.gitkeep
+storage/zips/*
+!storage/zips/.gitkeep
+scratch/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
