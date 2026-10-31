@@ -48,6 +48,7 @@ storage/output/*
 !storage/output/.gitkeep
 storage/zips/*
 !storage/zips/.gitkeep
+backend/storage/
 scratch/
 
 # IDE / OS
